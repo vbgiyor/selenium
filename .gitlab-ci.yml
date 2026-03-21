@@ -69,3 +69,4 @@ publish:
         </servers>
       </settings>
       EOF
+  - local: '.gitlab/ci/github-mirror.yml'
