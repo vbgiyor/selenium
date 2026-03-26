@@ -6,32 +6,24 @@ on:
 
 jobs:
   mirror:
-    runs-on: ubuntu-latest    
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Mirror GitLab → GitHub
         env:
           GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
           GITLAB_REPO: ${{ vars.GITLAB_REPO }}
-          # Use your Admin PAT if the default GITHUB_TOKEN is restricted
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # 1. Clone GitLab repo as a bare mirror
           git clone --mirror \
             "https://oauth2:${GITLAB_TOKEN}@gitlab.com/${GITLAB_REPO}.git" \
             repo.git
 
           cd repo.git
-
-          # 2. Add the GitHub remote
           git remote add github \
-            "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
+            "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
 
-          # 3. Surgical Force Push:
-          # This pushes ALL branches and ALL tags from GitLab to GitHub.
-          # The --prune flag ensures deleted GitLab branches are removed from GitHub.
-          # Using specific refspecs avoids pushing GitLab's internal Merge Request refs.
-          git push github --force --prune 'refs/heads/*:refs/heads/*'
-          git push github --force --tags
+          git push github --mirror --force
+          echo "✅ Mirrored ${GITLAB_REPO} → ${{ github.repository }}"
 
-          echo "✅ Mirror complete: ${GITLAB_REPO} -> ${{ github.repository }}"
