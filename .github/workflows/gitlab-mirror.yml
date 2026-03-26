@@ -22,7 +22,7 @@ jobs:
 
           cd repo.git
           git remote add github \
-            "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+            "https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git"
 
           git push github --mirror --force
           echo "✅ Mirrored ${GITLAB_REPO} → ${{ github.repository }}"
