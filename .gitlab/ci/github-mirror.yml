@@ -1,6 +1,6 @@
 # github-mirror.yml
 # Triggers GitHub Actions mirror workflow on every merge to main.
-# GitHub clones this GitLab repo and force-pushes to vbgiyor/selenium.
+# GitHub clones this GitLab repo and force-pushes to codefleetx/selenium.
 # GH_TOKEN must be set in GitLab CI/CD variables for this repo.
 
 trigger_github_mirror:
