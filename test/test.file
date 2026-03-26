@@ -1,1 +1,2 @@
-testcommit - Fix  ! [remote rejected] main -> main (protected branch hook declined)
+testcommit 1 - Fix  ! [remote rejected] main -> main (protected branch hook declined)
+testcommit 2 - Fix github-actions trigger
